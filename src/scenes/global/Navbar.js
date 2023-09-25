@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Badge, IconButton } from '@mui/material';
+import { Box, Badge, IconButton, useTheme } from '@mui/material';
 import { PersonOutline, MenuOutlined, ShoppingBagOutlined, SearchOutlined } from '@mui/icons-material';
 import { shades } from '../../theme'
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart)
+  const { typography: { h3 } } = useTheme();
+  
   return (
     <Box
       display="flex"
@@ -34,6 +36,8 @@ const Navbar = () => {
           onClick={() => navigate("/")}
           sx={{ "&:hover": { cursor: "pointer" } }}
           color={shades.secondary[500]}
+          fontSize={h3.fontSize}
+          fontWeight="bold"
         >
           Myntra
         </Box>
@@ -44,11 +48,11 @@ const Navbar = () => {
           columnGap="20px"
           zIndex="2"
         >
-          <IconButton sx={{ color: "black" }}>
-            <SearchOutlined />
+          <IconButton size='large' sx={{ color: "black" }}>
+            <SearchOutlined fontSize='inherit' />
           </IconButton>
-          <IconButton sx={{ color: "black" }}>
-            <PersonOutline />
+          <IconButton size='large' sx={{ color: "black" }}>
+            <PersonOutline fontSize='inherit' />
           </IconButton>
           <Badge
             badgeContent={cart.length}
@@ -65,15 +69,16 @@ const Navbar = () => {
             }}
           >
             <IconButton
+              size='large'
               sx={{ color: "black" }}
               onClick={() => dispatch(setIsCartOpen())}
             >
-              <ShoppingBagOutlined />
+              <ShoppingBagOutlined fontSize='inherit' />
             </IconButton>
           </Badge>
 
-          <IconButton sx={{ color: "black" }}>
-            <MenuOutlined />
+          <IconButton size='large' sx={{ color: "black" }}>
+            <MenuOutlined fontSize='inherit' />
           </IconButton>
         </Box>
       </Box>
