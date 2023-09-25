@@ -3,9 +3,18 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Home from './scenes/home/Home'
 import ItemDetails from './scenes/itemDetails/ItemDetails'
 import Navbar from './scenes/global/Navbar'
+import CartMenu from "./scenes/global/CartMenu";
+import Footer from "./scenes/global/Footer";
+import { setItems } from "./state/cartSlice";
+import productsData from './assets/strapi-mock-data/strapi-item-inputs.json'
+import { useDispatch } from "react-redux";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const products = productsData.data['api::item.item']
+  const productsArray = Object.values(products)
+  dispatch(setItems(productsArray))
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,8 +31,10 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={ <Home /> } />
-          <Route path="/item:itemId" element={ <ItemDetails /> } />
+          <Route path="item/:itemId" element={ <ItemDetails /> } />
         </Routes>
+        <CartMenu />
+        <Footer />
       </Router>
     </div>
   );
