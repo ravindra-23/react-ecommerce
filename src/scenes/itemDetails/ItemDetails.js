@@ -75,7 +75,10 @@ const ItemDetails = () => {
                 borderRadius: 0,
                 minWidth: "150px",
                 padding: "10px 40px",
-
+                "&:hover": {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
               }}
                 onClick={() => dispatch(addToCart({ item: { ...item[0], count } }))}
               >
