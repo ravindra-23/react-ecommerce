@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
 import Item from '../../components/Item'
 import { Tabs, Tab, Box, useMediaQuery, Typography } from '@mui/material'
-import productsData from '../../assets/strapi-mock-data/strapi-item-inputs.json'
+import { useSelector } from 'react-redux'
 
 const ShoppingList = () => {
   const [value, setValue] = useState('all');
   const breakPoint = useMediaQuery("(min-width:600px)");
-  const products = productsData.data['api::item.item']
-  const productsArray = Object.values(products)
-  console.log(productsArray)
+  const products = useSelector((state) => state.cart.items)
   
-  const topRatedProducts = productsArray.filter((product) => product.category === "topRated")
-  const newArrivalProducts = productsArray.filter((product) => product.category === "newArrivals")
-  const bestSellerProducts = productsArray.filter((product) => product.category === "bestSellers")
+  const topRatedProducts = products.filter((product) => product.category === "topRated")
+  const newArrivalProducts = products.filter((product) => product.category === "newArrivals")
+  const bestSellerProducts = products.filter((product) => product.category === "bestSellers")
 
   const handleChange = (e, newValue) => {
     setValue(newValue)
@@ -55,7 +53,7 @@ const ShoppingList = () => {
         columnGap="1.33%"
       >
         {value === 'all' && 
-          productsArray.map((product) => (
+          products.map((product) => (
             <Item item={product} key={`${product.name}-${product.id}`}/>
           ))
         }
